@@ -1,38 +1,32 @@
-import Link from "next/link"
-
-import { appClient } from "@/lib/auth0"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { Auth0Logo } from "@/components/auth0-logo"
-
-import { SignUpForm } from "./signup-form"
-import { WelcomeBackCard } from "./welcome-back-card"
-import { SubmitButton } from "@/components/submit-button"
+import { authConfig } from './lib/auth0';
+import { buttonVariants } from './lib/components/ui/button';
+import { SubmitButton } from './lib/components/ui/submit-button';
+import { Auth0Logo } from './lib/components/ui/auth0-logo';
+import { WelcomeBackCard } from './lib/components/ui/welcome-back-card';
+import { SignUpForm } from './lib/components/ui/signup-form';
+import { cn } from './lib/utils';
 
 export default async function Home() {
-  const session = await appClient.getSession()
+  const session = await authConfig.getSession();
 
   return (
     <div className="container relative sm:grid h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      {session ? (
+      {session?.user ? (
         <a
           href="/api/auth/logout"
           className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8"
+            buttonVariants({ variant: 'ghost' }),
+            'absolute right-4 top-4 md:right-8 md:top-8'
           )}
         >
           <SubmitButton>Logout</SubmitButton>
         </a>
       ) : (
-        <div
-          className="absolute right-4 top-4 md:right-8 md:top-8"
-        ><span className="text-sm">Already joined?</span> <a
-          className="text-sm underline"
-          href="/api/auth/login"
-        >
-          <SubmitButton>Log in</SubmitButton>
-        </a>
+        <div className="absolute right-4 top-4 md:right-8 md:top-8">
+          <span className="text-sm pr-3">Already joined? </span>{' '}
+          <a className="text-sm underline" href="/api/auth/login">
+            <SubmitButton> Log in</SubmitButton>
+          </a>
         </div>
       )}
 
@@ -44,23 +38,24 @@ export default async function Home() {
         </div>
         <div className="relative z-20 m-auto max-w-sm text-center">
           <blockquote className="space-y-2">
-            <div className="space-y-8">
-              <p className="text-lg font-medium">
-                KzBarry is a reference B2B SaaS application built using Next.js
-                and Auth0 by Okta.
-              </p>
-              <p className="text-lg">
-                It features multi-tenancy support, user management and access
-                controls, security policies, self-service Single Sign-On
-                configuration and more out-of-the-box.
+            <div className="space-y-12">
+              <p className="text-lg font-medium font-semibold">What is KzBarry?</p>
+              <p className="text-sm">
+                KzBarry consist on the creation of several templates of a tech stack that can be cloned to start a
+                new project. This will significantly reduce the bootstrap time
+                and enable the development team to focus most of their effort on
+                business logic. It will save considerable time in releasing the
+                initial prototype/MVP and allow Kaizen to decrease estimation
+                time during the discovery phase of new projects, making client
+                proposals more appealing.
               </p>
             </div>
           </blockquote>
         </div>
       </div>
       <div className="lg:p-8 flex h-screen">
-        {session ? <WelcomeBackCard /> : <SignUpForm />}
+        {session?.user ? <WelcomeBackCard /> : <SignUpForm />}
       </div>
     </div>
-  )
+  );
 }

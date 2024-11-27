@@ -1,28 +1,27 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import { useSearchParams } from "next/navigation"
-import { ArrowRightIcon } from "@radix-ui/react-icons"
+import Link from 'next/link';
+import { ArrowRightIcon } from '@radix-ui/react-icons';
 
-import { Button } from "@/components/ui/button"
+import { useSearchParams } from 'next/navigation';
 import {
   Card,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+  CardTitle
+} from 'app/lib/components/ui/card';
+import { Button } from 'app/lib/components/ui/button';
 
 export default function SearchBar() {
-  const searchParams = useSearchParams()
-  const error = searchParams.get("error")
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
 
   return (
     <div className="mx-auto max-w-sm">
       <Card className="w-[450px]">
         <CardHeader>
           <CardTitle>Unauthorized</CardTitle>
-          <CardDescription>{error}</CardDescription>
+          {/* <CardDescription>{error}</CardDescription> */}
         </CardHeader>
         <CardFooter>
           <Link href="/" className="w-full">
@@ -33,5 +32,5 @@ export default function SearchBar() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
